@@ -1,9 +1,14 @@
 public class Employee {
-    private NameOfWorker name;
+
+    private static int idGenerator = 1;
+
+    private final int id;
+    private final NameOfWorker name;
     private int division;
     private int salary;
 
     public Employee(NameOfWorker name, int division, int salary) {
+        id = idGenerator++;
         this.name = name;
         this.division = division;
         this.salary = salary;

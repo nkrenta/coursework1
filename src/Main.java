@@ -63,7 +63,7 @@ public class Main {
             }
             case 5: {
                 System.out.println("Запрос на среднее значение зарплаты.");
-                double averageSalary = monthlyExpenses(dataBase) / dataBase.length;
+                double averageSalary = getAverageSalary(dataBase);
                 System.out.println("Среднее значение зарплаты: " + averageSalary);
                 break;
             }
@@ -73,6 +73,10 @@ public class Main {
                 break;
             }
         }
+    }
+
+    private static double getAverageSalary(Employee[] dataBase) {
+        return monthlyExpenses(dataBase) / dataBase.length;
     }
 
     private static void nameOfEmployee(Employee[] dataBase) {
