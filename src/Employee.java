@@ -36,7 +36,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return name.toString() +
+        return "id[" + id + "], " + name.toString() +
                 ", отдел [" + division + "]" +
                 ", зарплата сотрудника - " + salary;
     }

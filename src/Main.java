@@ -1,3 +1,5 @@
+import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -17,9 +19,27 @@ public class Main {
     Подсчитать среднее значение зарплат (можно использовать для этого метод из пункта b);
     Распечатать ФИО всех сотрудников (метод ничего).
     */
+
+    private final static Random RANDOM = new Random();
+    private final static String[] FIRSTNAMES = {"Тимофей", "Владислав", "Александр", "Алексей", "Петр", "Иван"};
+    private final static String[] SECONDNAMES = {"Иванович", "Петрович", "Дмитриевич", "Алексеевич", "Матвеевич", "Александрович"};
+    private final static String[] LASTNAMES = {"Иванов", "Петров", "Сидоров", "Капушин", "Пупкин", "Купцов", "Молчанов", "Сидоров"};
+
+    private final static Employee[] EMPLOYEES = new Employee[10];
+
+    private static void initEmployees() {
+        for (int i = 0; i < EMPLOYEES.length; i++) {
+            String lastName = LASTNAMES[RANDOM.nextInt(0, LASTNAMES.length)];
+            String firstName = FIRSTNAMES[RANDOM.nextInt(0, FIRSTNAMES.length)];
+            String secondName = SECONDNAMES[RANDOM.nextInt(0, SECONDNAMES.length)];
+            EMPLOYEES[i] = new Employee(new NameOfWorker(lastName, firstName, secondName), RANDOM.nextInt(1, 6), RANDOM.nextInt(40000, 110000));
+        }
+    }
+
+
     public static void main(String[] args) {
         //Method for getting the list of Employee
-        Employee[] dataBase = getEmployees();
+        initEmployees();
 
         //UI for communication
         System.out.println("Выберите действие и напишите его порядковый номер:");
@@ -29,22 +49,28 @@ public class Main {
         System.out.println("4. Найти сотрудника с максимальной ЗП");
         System.out.println("5. Подсчитать среднее значение зарплат");
         System.out.println("6. Распечатать ФИО всех сотрудников");
+        System.out.println("7. Индексация заработной платы");
+        System.out.println("8. Данные по отделу");
         Scanner option = new Scanner(System.in);
         switch (option.nextInt()) {
             case 1: {
                 System.out.println("Список всех сотрудников и их данных:");
-                allInfoOfEmployee(dataBase);
+                allInfoOfEmployee(EMPLOYEES);
                 break;
             }
             case 2: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Запрос по затратам в месяц.");
-                System.out.println("Сумма затрат по ЗП в месяц составляет " + monthlyExpenses(dataBase));
+                System.out.println("Сумма затрат по ЗП в месяц составляет " + monthlyExpenses(EMPLOYEES));
                 break;
             }
             case 3: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Запрос на сотрудника с минимальной зарплатой.");
-                int minSalary = getMinSalary(dataBase);
-                for (Employee employee : dataBase) {
+                int minSalary = getMinSalary(EMPLOYEES);
+                for (Employee employee : EMPLOYEES) {
                     if (employee.getSalary() == minSalary) {
                         System.out.println("Сотрудник с минимальной ЗП: " + employee.getName() + " " + employee.getSalary());
                     }
@@ -52,9 +78,11 @@ public class Main {
                 break;
             }
             case 4: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Запрос на сотрудника с максимальной зарплатой.");
-                int maxSalary = getMaxSalary(dataBase);
-                for (Employee employee : dataBase) {
+                int maxSalary = getMaxSalary(EMPLOYEES);
+                for (Employee employee : EMPLOYEES) {
                     if (employee.getSalary() == maxSalary) {
                         System.out.println("Сотрудник с максимальной ЗП: " + employee.getName() + " " + employee.getSalary());
                     }
@@ -62,76 +90,123 @@ public class Main {
                 break;
             }
             case 5: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Запрос на среднее значение зарплаты.");
-                double averageSalary = getAverageSalary(dataBase);
+                double averageSalary = getAverageSalary(EMPLOYEES);
                 System.out.println("Среднее значение зарплаты: " + averageSalary);
                 break;
             }
             case 6: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Запрос на печать ФИО всех сотрудников.");
-                nameOfEmployee(dataBase);
+                nameOfEmployee();
                 break;
+            }
+            case 7: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
+                System.out.println("Индексация зарплаты");
+                getIndexedSalary(EMPLOYEES);
+                allInfoOfEmployee(EMPLOYEES);
+                break;
+            }
+            case 8: {
+                System.out.println("Список всех сотрудников и их данных:");
+                allInfoOfEmployee(EMPLOYEES);
+                //allInfoOfEmployee(Objects.requireNonNull(getEmployeesOfDivision(EMPLOYEES)));
+                getMinSalary(Objects.requireNonNull(getEmployeesOfDivision(EMPLOYEES)));
+                getMaxSalary(Objects.requireNonNull(getEmployeesOfDivision(EMPLOYEES)));
+                getAverageSalary(getEmployeesOfDivision(EMPLOYEES));
+                getIndexedSalary(Objects.requireNonNull(getEmployeesOfDivision(EMPLOYEES)));
+
             }
         }
     }
 
-    private static double getAverageSalary(Employee[] dataBase) {
-        return monthlyExpenses(dataBase) / dataBase.length;
+    private static Employee[] getEmployeesOfDivision(Employee[] employees) {
+        Scanner indexDivision = new Scanner(System.in);
+        System.out.println("Введите номер отдела:");
+        int iD = indexDivision.nextInt();
+        indexDivision.close();
+        System.out.println("Сотрудники в отделе " + iD + ":");
+        int count = 0;
+        for (Employee employee : employees) {
+            if (employee.getDivision() == iD) {
+                System.out.println(employee);
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("Нет сотрудников в данном отделе!");
+            return null;
+        } else if (count == 1) {
+            System.out.println("В данном отделе только один сотрудник.");
+            return new Employee[]{employees[0]};
+        } else {
+            Employee[] employeeOfDivision = new Employee[count];
+            for (int i = 0; i < employees.length; i++) {
+                if (employees[i].getDivision() == iD) {
+                    employeeOfDivision[i] = employees[i];
+                }
+            }
+            return employeeOfDivision;
+        }
     }
 
-    private static void nameOfEmployee(Employee[] dataBase) {
-        for (Employee employee : dataBase) {
+    private static void getIndexedSalary(Employee[] employees) {
+        Scanner persentageOfIndex = new Scanner(System.in);
+        System.out.println("Введите процент зарплаты:");
+        double pOI = persentageOfIndex.nextDouble();
+        persentageOfIndex.close();
+        pOI /= 100;
+        for (Employee employee : employees) {
+            employee.setSalary((int) (employee.getSalary() + employee.getSalary() * pOI));
+        }
+    }
+
+    private static double getAverageSalary(Employee[] employees) {
+        return monthlyExpenses(employees) / employees.length;
+    }
+
+    private static void nameOfEmployee() {
+        for (Employee employee : EMPLOYEES) {
             System.out.println(employee.getName());
         }
     }
 
-    private static int getMaxSalary(Employee[] dataBase) {
-        int maxSalary = dataBase[0].getSalary();
-        for (int i = 1; i < dataBase.length; i++) {
-            if (dataBase[i].getSalary() > maxSalary) {
-                maxSalary = dataBase[i].getSalary();
+    private static int getMaxSalary(Employee[] employee) {
+        int maxSalary = employee[0].getSalary();
+        for (int i = 1; i < employee.length; i++) {
+            if (employee[i].getSalary() > maxSalary) {
+                maxSalary = employee[i].getSalary();
             }
         }
         return maxSalary;
     }
 
-    private static int getMinSalary(Employee[] dataBase) {
-        int minSalary = dataBase[0].getSalary();
-        for (int i = 1; i < dataBase.length; i++) {
-            if (dataBase[i].getSalary() < minSalary) {
-                minSalary = dataBase[i].getSalary();
+    private static int getMinSalary(Employee[] employees) {
+        int minSalary = employees[0].getSalary();
+        for (int i = 1; i < employees.length; i++) {
+            if (employees[i].getSalary() < minSalary) {
+                minSalary = employees[i].getSalary();
             }
         }
         return minSalary;
     }
 
-    private static void allInfoOfEmployee(Employee[] dataBase) {
-        for (Employee employee : dataBase) {
+    private static void allInfoOfEmployee(Employee[] employees) {
+        for (Employee employee : employees) {
             System.out.println(employee);
         }
     }
 
-    private static double monthlyExpenses(Employee[] dataBase) {
+    private static double monthlyExpenses(Employee[] employees) {
         int sum = 0;
-        for (Employee employee : dataBase) {
+        for (Employee employee : employees) {
             sum += employee.getSalary();
         }
         return sum;
-    }
-
-    private static Employee[] getEmployees() {
-        Employee worker1 = new Employee(new NameOfWorker("Иванов", "Иван", "Иванович"), 1, 70000);
-        Employee worker2 = new Employee(new NameOfWorker("Петров", "Петр", "Петрович"), 2, 65000);
-        Employee worker3 = new Employee(new NameOfWorker("Сидоров", "Алексей", "Дмитриевич"), 3, 60000);
-        Employee worker4 = new Employee(new NameOfWorker("Капушин", "Александр", "Алексеевич"), 3, 54000);
-        Employee worker5 = new Employee(new NameOfWorker("Пупкин", "Владислав", "Дмитриевич"), 3, 90000);
-        Employee worker6 = new Employee(new NameOfWorker("Купцов", "Петр", "Дмитриевич"), 3, 100000);
-        Employee worker7 = new Employee(new NameOfWorker("Молчанов", "Тимофей", "Матвеевич"), 3, 55000);
-        Employee worker8 = new Employee(new NameOfWorker("Сидоров", "Алексей", "Дмитриевич"), 3, 89000);
-        Employee worker9 = new Employee(new NameOfWorker("Сидоров", "Алексей", "Дмитриевич"), 3, 57000);
-        Employee worker10 = new Employee(new NameOfWorker("Сидоров", "Алексей", "Дмитриевич"), 3, 67800);
-
-        Employee[] dataBase = {worker1, worker2, worker3, worker4, worker5, worker6, worker7, worker8, worker9, worker10};
-        return dataBase;
     }
 }
