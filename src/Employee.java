@@ -14,6 +14,10 @@ public class Employee {
         this.salary = salary;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getDivision() {
         return division;
     }
