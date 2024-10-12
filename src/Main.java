@@ -20,8 +20,6 @@ public class Main {
     */
     public static void main(String[] args) {
         //Method for getting the list of Employee
-        EmployeeBook.initEmployees();
-
         //UI for communication
         System.out.println("Выберите действие и напишите его порядковый номер:");
         System.out.println("1. Получить список всех сотрудников со всеми имеющимися по ним данными");
@@ -33,32 +31,35 @@ public class Main {
         System.out.println("7. Индексация заработной платы");
         System.out.println("8. Данные по отделу");
         System.out.println("9. Поиск сотрудников по заданным максимальному и минимальному порогу зарплат:");
+        System.out.println("10. Добавить сотрудника:");
+        System.out.println("11. Удаление сотрудника:");
+        System.out.println("12. Получить сотрудника по ID:");
         Scanner option = new Scanner(System.in);
         switch (option.nextInt()) {
             case 1: {
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES);
+                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
                 break;
             }
             case 2: {
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
                 System.out.println("Запрос по затратам в месяц.");
-                System.out.println("Сумма затрат по ЗП в месяц составляет " + EmployeeBook.monthlyExpenses(EmployeeBook.EMPLOYEES));
+                System.out.println("Сумма затрат по ЗП в месяц составляет " + EmployeeBook.monthlyExpenses(EmployeeBook.EMPLOYEES()));
                 break;
             }
             case 3: {
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
                 System.out.println("Запрос на сотрудника с минимальной зарплатой.");
-                EmployeeBook.getMinSalaryAndPrint(EMPLOYEES);
+                EmployeeBook.getMinSalaryAndPrint(EmployeeBook.EMPLOYEES());
                 break;
             }
             case 4: {
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
                 System.out.println("Запрос на сотрудника с максимальной зарплатой.");
-                EmployeeBook.getMaxSalaryAndPrint(EMPLOYEES);
+                EmployeeBook.getMaxSalaryAndPrint(EmployeeBook.EMPLOYEES());
                 break;
             }
             case 5: {
@@ -79,7 +80,7 @@ public class Main {
                 System.out.println("Список всех сотрудников и их данных:");
                 EmployeeBook.allInfoOfEmployee(EMPLOYEES);
                 System.out.println("Индексация зарплаты");
-                EmployeeBook.getIndexedSalaryAndPrint(EMPLOYEES, getIndex());
+                EmployeeBook.getIndexedSalaryAndPrint(EMPLOYEES, EmployeeBook.getIndex());
                 EmployeeBook.allInfoOfEmployee(EMPLOYEES);
                 break;
             }
@@ -104,6 +105,24 @@ public class Main {
                 EmployeeBook.getEmployeesWithLowerSalary(EMPLOYEES);
                 EmployeeBook.getEmployeesWithHigherSalary(EMPLOYEES);
                 break;
+            }
+            case 10: {
+                System.out.println("Добавление сотрудника...");
+                EmployeeBook.addEmployee();
+                break;
+            }
+            case 11: {
+                System.out.println("Удаление сотрудника...");
+                EmployeeBook.deleteEmployee();
+                break;
+            }
+            case 12: {
+                System.out.println("Получение сотрудника по ID...");
+                EmployeeBook.getEmployeeByID(getID());
+                break;
+            }
+            default: {
+                System.out.println("Неверный номер опции.");
             }
         }
     }
