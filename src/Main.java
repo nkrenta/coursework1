@@ -21,6 +21,10 @@ public class Main {
     public static void main(String[] args) {
         //Method for getting the list of Employee
         //UI for communication
+        EmployeeBook employeeBook = new EmployeeBook();
+        employeeBook.initEmployees();
+
+        System.out.println();
         System.out.println("Выберите действие и напишите его порядковый номер:");
         System.out.println("1. Получить список всех сотрудников со всеми имеющимися по ним данными");
         System.out.println("2. Посчитать сумму затрат на ЗП в месяц");
@@ -37,88 +41,129 @@ public class Main {
         Scanner option = new Scanner(System.in);
         switch (option.nextInt()) {
             case 1: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
+                employeeBook.allInfoOfEmployee();
                 break;
             }
             case 2: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
+                employeeBook.allInfoOfEmployee();
+                System.out.println();
                 System.out.println("Запрос по затратам в месяц.");
-                System.out.println("Сумма затрат по ЗП в месяц составляет " + EmployeeBook.monthlyExpenses(EmployeeBook.EMPLOYEES()));
+                System.out.println("Сумма затрат по ЗП в месяц составляет " + employeeBook.monthlyExpenses());
                 break;
             }
             case 3: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
+                employeeBook.allInfoOfEmployee();
+                System.out.println();
                 System.out.println("Запрос на сотрудника с минимальной зарплатой.");
-                EmployeeBook.getMinSalaryAndPrint(EmployeeBook.EMPLOYEES());
+                employeeBook.getMinSalaryAndPrint();
                 break;
             }
             case 4: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EmployeeBook.EMPLOYEES());
+                employeeBook.allInfoOfEmployee();
+                System.out.println();
                 System.out.println("Запрос на сотрудника с максимальной зарплатой.");
-                EmployeeBook.getMaxSalaryAndPrint(EmployeeBook.EMPLOYEES());
+                employeeBook.getMaxSalaryAndPrint();
                 break;
             }
             case 5: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                employeeBook.allInfoOfEmployee();
+                System.out.println();
                 System.out.println("Запрос на среднее значение зарплаты.");
-                EmployeeBook.getAverageSalaryAndPrint(EMPLOYEES);
+                employeeBook.getCountOfNULL();
+                employeeBook.getAverageSalaryAndPrint();
                 break;
             }
             case 6: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                employeeBook.allInfoOfEmployee();
+                System.out.println();
                 System.out.println("Запрос на печать ФИО всех сотрудников.");
-                EmployeeBook.nameOfEmployee();
+                employeeBook.nameOfEmployee();
                 break;
             }
             case 7: {
+                employeeBook.setChosenArray(1);
                 System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                employeeBook.allInfoOfEmployee();
                 System.out.println("Индексация зарплаты");
-                EmployeeBook.getIndexedSalaryAndPrint(EMPLOYEES, EmployeeBook.getIndex());
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
+                employeeBook.getIndex();
+                employeeBook.getIndexedSalaryAndPrint();
                 break;
             }
             case 8: {
-                System.out.println("Список всех сотрудников и их данных:");
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
-                final int iD = getDivision();
-                EmployeeBook.allInfoOfEmployee(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)));
+                employeeBook.setChosenArray(1);
+                employeeBook.allInfoOfEmployee();
+                employeeBook.setChosenArray(2);
                 System.out.println();
-                EmployeeBook.getMinSalaryAndPrint(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)));
-                EmployeeBook.getMaxSalaryAndPrint(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)));
-                EmployeeBook.getAverageSalaryAndPrint(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)));
-                EmployeeBook.getIndexedSalaryAndPrint(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)), getIndex());
+                employeeBook.getDivision();
+                System.out.println("Список сотрудников отдела [" + employeeBook.getiDiv() + "]");
+                employeeBook.getEmployeesOfDivisionCount();
+                employeeBook.infoWithoutDivision();
+                employeeBook.getMinSalaryAndPrint();
+                employeeBook.getMaxSalaryAndPrint();
+                employeeBook.getAverageSalaryAndPrint();
+                employeeBook.getIndex();
+                employeeBook.getIndexedSalaryAndPrint();
                 System.out.println();
-                System.out.println("Список сотрудников отдела [" + iD + "]");
-                EmployeeBook.infoWithoutDivision(Objects.requireNonNull(getListOfEmployeeDivision(getEmployeesOfDivisionCount(iD), iD)));
                 break;
             }
             case 9: {
-                EmployeeBook.allInfoOfEmployee(EMPLOYEES);
-                System.out.println("Поиск...");
-                EmployeeBook.getEmployeesWithLowerSalary(EMPLOYEES);
-                EmployeeBook.getEmployeesWithHigherSalary(EMPLOYEES);
-                break;
+                employeeBook.setChosenArray(1);
+                employeeBook.allInfoOfEmployee();
+                employeeBook.getArrayOfEmployees();
+                if (employeeBook.getChosenArray() == 2) {
+                    employeeBook.getDivision();
+                    System.out.println("Список сотрудников отдела [" + employeeBook.getiDiv() + "]");
+                    employeeBook.getEmployeesOfDivisionCount();
+                    employeeBook.infoWithoutDivision();
+                    System.out.println();
+                    System.out.println("Поиск...");
+                    System.out.println();
+                    employeeBook.getEmployeesWithLowerSalary();
+                    System.out.println();
+                    employeeBook.getEmployeesWithHigherSalary();
+                    break;
+                } else if (employeeBook.getChosenArray() == 1) {
+                    System.out.println();
+                    System.out.println("Поиск...");
+                    System.out.println();
+                    employeeBook.getEmployeesWithLowerSalary();
+                    System.out.println();
+                    employeeBook.getEmployeesWithHigherSalary();
+                    break;
+                }
             }
             case 10: {
-                System.out.println("Добавление сотрудника...");
-                EmployeeBook.addEmployee();
+                employeeBook.setChosenArray(1);
+                employeeBook.allInfoOfEmployee();
+                employeeBook.addEmployee();
+                employeeBook.allInfoOfEmployee();
                 break;
             }
             case 11: {
+                employeeBook.setChosenArray(1);
+                employeeBook.allInfoOfEmployee();
+                employeeBook.getID();
                 System.out.println("Удаление сотрудника...");
-                EmployeeBook.deleteEmployee();
+                employeeBook.deleteEmployee();
                 break;
             }
             case 12: {
+                employeeBook.nameOfEmployeeWithId();
                 System.out.println("Получение сотрудника по ID...");
-                EmployeeBook.getEmployeeByID(getID());
+                employeeBook.getID();
+                employeeBook.getEmployeeByID();
                 break;
             }
             default: {
